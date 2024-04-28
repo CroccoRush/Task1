@@ -34,6 +34,7 @@ func Ping(w http.ResponseWriter, r *http.Request) {
 	req, err := json.Marshal("pong")
 	if err != nil {
 		log.Printf("error: %s", err)
+		writeRes(w, "StatusInternalServerError")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -50,6 +51,7 @@ func Set(w http.ResponseWriter, r *http.Request) {
 	err := rdb.Set(ctx, key, value, 0).Err()
 	if err != nil {
 		log.Printf("error: %s", err)
+		writeRes(w, "StatusInternalServerError")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -83,6 +85,7 @@ func writeRes(w http.ResponseWriter, val string) {
 	req, err := json.Marshal(val)
 	if err != nil {
 		log.Printf("error: %s", err)
+		writeRes(w, "StatusInternalServerError")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
