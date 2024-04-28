@@ -1,0 +1,20 @@
+---
+version: '3'
+
+services:
+  main:
+    image: server
+    container_name: server
+    ports:
+      - "8080:8080"
+
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis
+    command:
+      - 'redis-server'
+      - '--databases 1'
+      - '--save 5 1'
+      - '--protected-mode no'
+    volumes:
+      - ./docker/redis/data:/data
